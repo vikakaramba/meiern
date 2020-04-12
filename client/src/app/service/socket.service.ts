@@ -11,6 +11,7 @@ export class SocketService {
 
   constructor() {
     this.socket = io(environment.serverUrl);
+    console.log('Websocket opened');
   }
 
   public getSocket(): Socket {

@@ -62,7 +62,6 @@ export class PlayerState {
     const nextPlayerStateModel = produce(ctx.getState(), (draft) => {
       draft.myPlayer = action.player;
     });
-    console.log(nextPlayerStateModel);
     ctx.setState(nextPlayerStateModel);
   }
 
@@ -74,8 +73,6 @@ export class PlayerState {
     const nextPlayerStateModel = produce(ctx.getState(), (draft) => {
       draft.players = action.players;
     });
-    console.log(nextPlayerStateModel);
-
     ctx.setState(nextPlayerStateModel);
   }
 }
