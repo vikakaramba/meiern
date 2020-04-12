@@ -1,8 +1,9 @@
 import express from "express";
 import socketIo from "socket.io";
 import { Server } from "http";
+import { MaiernServer } from "./MeiernServer";
 
-class MeiernServer {
+class SocketServer {
   private readonly app: express.Application;
 
   public readonly io: SocketIO.Server;
@@ -29,8 +30,8 @@ class MeiernServer {
   }
 
   private initializeSocket() {
-    this.io.onconnection((socket) => {});
+    new MaiernServer(this.io);
   }
 }
 
-const app = new MeiernServer();
+const app = new SocketServer();

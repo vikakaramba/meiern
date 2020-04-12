@@ -1,0 +1,8 @@
+<form class="choose-name__form" (submit)="setUsername()">
+  <mat-form-field>
+    <mat-label>Username:</mat-label>
+    <input matInput [formControl]="usernameFormControl">
+  </mat-form-field>
+  <button mat-button type="submit">Start Game</button>
+  <button mat-button>Reset</button>
+</form>
