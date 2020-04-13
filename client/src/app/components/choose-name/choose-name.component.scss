@@ -15,5 +15,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 150px;
+
+}
+
+.choose-name__card {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  height: 200px;
+  max-height: 200px;
+}
+
+.choose-name__player-list {
+  flex-grow: 1;
+  padding: 10px;
 }

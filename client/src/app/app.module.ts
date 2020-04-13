@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MeiernComponent } from './components/meiern/meiern.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatCardModule } from '@angular/material/card';
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

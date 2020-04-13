@@ -1,1 +1,13 @@
+<ng-template #noPlayers>
+  <div class="player-list__no-players">
+    Es spielt noch niemand
+  </div>
 
+</ng-template>
+
+  <ng-container *ngIf="(playerState$ | async)?.players.length != 0; else noPlayers">
+    <h3>Spieler</h3>
+    <ul class="player-list__list">
+      <li *ngFor="let player of (playerState$ | async)?.players">{{player.name}}</li>
+    </ul>
+  </ng-container>

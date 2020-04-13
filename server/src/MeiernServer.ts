@@ -4,6 +4,7 @@ import {
   SetActivePlayerAction,
   SetPlayerListAction,
   SetPlayerNameAction,
+  GetPlayerListAction,
 } from "common/lib/Player";
 import { Server } from "socket.io";
 
@@ -31,6 +32,14 @@ export class MaiernServer {
       );
       socket.on("disconnect", (reason: string) => {
         this.handleDisconnect(socket, reason);
+      });
+      socket.on(GetPlayerListAction.type, () => {
+        socket.emit(
+          SetPlayerListAction.type,
+          new SetPlayerListAction(
+            this.allPlayer.map((player) => player.toPlayer())
+          )
+        );
       });
     });
   }

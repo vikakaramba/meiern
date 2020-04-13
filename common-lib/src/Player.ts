@@ -8,8 +8,10 @@ export class Player {
   }
 }
 
+const playerType: string = "[Player]";
+
 export class SetPlayerNameAction {
-  public static readonly type = "[Player] Set Player Name";
+  public static readonly type = `${playerType} Set Player Name`;
 
   constructor(public readonly name: string) {}
 }
@@ -19,13 +21,17 @@ export class SetPlayerNameAction {
  * Contains Player object for new Player
  */
 export class SetActivePlayerAction {
-  public static readonly type = "[Player] Set Active Player";
+  public static readonly type = `${playerType} Set Active Player`;
 
   constructor(public readonly player: Player) {}
 }
 
 export class SetPlayerListAction {
-  public static readonly type = "[Player] Set List of all Players";
+  public static readonly type = `${playerType} Set List of all Players`;
 
   constructor(public readonly players: Player[]) {}
+}
+
+export class GetPlayerListAction {
+  public static readonly type = `${playerType} Get List of all Players`;
 }

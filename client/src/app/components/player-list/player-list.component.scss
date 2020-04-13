@@ -1,0 +1,14 @@
+.player-list__list {
+  list-style: none;
+  overflow: auto;
+  padding: 0;
+  max-height: 150px;
+}
+
+.player-list__no-players {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}

@@ -5,7 +5,7 @@ export declare class Player {
 }
 export declare class SetPlayerNameAction {
     readonly name: string;
-    static readonly type = "[Player] Set Player Name";
+    static readonly type: string;
     constructor(name: string);
 }
 /**
@@ -14,12 +14,15 @@ export declare class SetPlayerNameAction {
  */
 export declare class SetActivePlayerAction {
     readonly player: Player;
-    static readonly type = "[Player] Set Active Player";
+    static readonly type: string;
     constructor(player: Player);
 }
 export declare class SetPlayerListAction {
     readonly players: Player[];
-    static readonly type = "[Player] Set List of all Players";
+    static readonly type: string;
     constructor(players: Player[]);
+}
+export declare class GetPlayerListAction {
+    static readonly type: string;
 }
 //# sourceMappingURL=Player.d.ts.map

@@ -9,11 +9,12 @@ var Player = /** @class */ (function () {
     return Player;
 }());
 exports.Player = Player;
+var playerType = "[Player]";
 var SetPlayerNameAction = /** @class */ (function () {
     function SetPlayerNameAction(name) {
         this.name = name;
     }
-    SetPlayerNameAction.type = "[Player] Set Player Name";
+    SetPlayerNameAction.type = playerType + " Set Player Name";
     return SetPlayerNameAction;
 }());
 exports.SetPlayerNameAction = SetPlayerNameAction;
@@ -25,7 +26,7 @@ var SetActivePlayerAction = /** @class */ (function () {
     function SetActivePlayerAction(player) {
         this.player = player;
     }
-    SetActivePlayerAction.type = "[Player] Set Active Player";
+    SetActivePlayerAction.type = playerType + " Set Active Player";
     return SetActivePlayerAction;
 }());
 exports.SetActivePlayerAction = SetActivePlayerAction;
@@ -33,7 +34,14 @@ var SetPlayerListAction = /** @class */ (function () {
     function SetPlayerListAction(players) {
         this.players = players;
     }
-    SetPlayerListAction.type = "[Player] Set List of all Players";
+    SetPlayerListAction.type = playerType + " Set List of all Players";
     return SetPlayerListAction;
 }());
 exports.SetPlayerListAction = SetPlayerListAction;
+var GetPlayerListAction = /** @class */ (function () {
+    function GetPlayerListAction() {
+    }
+    GetPlayerListAction.type = playerType + " Get List of all Players";
+    return GetPlayerListAction;
+}());
+exports.GetPlayerListAction = GetPlayerListAction;

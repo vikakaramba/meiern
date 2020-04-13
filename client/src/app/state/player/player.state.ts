@@ -1,4 +1,4 @@
-import { State, Action, StateContext, Store } from '@ngxs/store';
+import { State, Action, StateContext, Store, NgxsOnInit } from '@ngxs/store';
 import produce from 'immer';
 import { Injectable } from '@angular/core';
 import { SocketService } from '../../service/socket.service';
@@ -6,6 +6,7 @@ import Socket = SocketIOClient.Socket;
 import {
   Player,
   SetActivePlayerAction,
+  GetPlayerListAction,
   SetPlayerListAction,
   SetPlayerNameAction,
 } from 'common/lib/Player';
@@ -20,7 +21,7 @@ export class PlayerStateModel {
   defaults: new PlayerStateModel(),
 })
 @Injectable()
-export class PlayerState {
+export class PlayerState implements NgxsOnInit {
   private readonly socket: Socket;
 
   constructor(socketService: SocketService, private readonly store: Store) {
@@ -38,6 +39,18 @@ export class PlayerState {
         this.store.dispatch(new SetPlayerListAction(playerListAction.players));
       }
     );
+  }
+
+  ngxsOnInit(ctx?: StateContext<PlayerStateModel> | undefined) {
+    this.store.dispatch(new GetPlayerListAction());
+  }
+
+  @Action(GetPlayerListAction)
+  public getPlayerList(
+    ctx: StateContext<PlayerStateModel>,
+    action: GetPlayerListAction
+  ) {
+    this.socket.emit(GetPlayerListAction.type);
   }
 
   @Action(SetPlayerNameAction)
