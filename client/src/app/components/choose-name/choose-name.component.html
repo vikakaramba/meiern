@@ -7,7 +7,7 @@
         <input matInput [formControl]="usernameFormControl">
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit">Start Game</button>
-      <button mat-raised-button color="warn">Reset</button>
+      <button mat-raised-button color="warn" disabled matTooltip="Geht noch nicht">Reset</button>
     </form>
     <app-player-list class="choose-name__player-list"></app-player-list>
   </div>

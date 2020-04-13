@@ -15,6 +15,7 @@ import { MeiernComponent } from './components/meiern/meiern.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatListModule } from '@angular/material/list';
     ReactiveFormsModule,
     MatCardModule,
     MatListModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
