@@ -1,4 +1,3 @@
-
 // Custom Theming for Angular Material
 // For more information: https://mat erial.angular.io/guide/theming
 @import '~@angular/material/theming';
@@ -19,7 +18,7 @@ $client-accent: mat-palette($mat-pink, A200, A100, A400);
 $client-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
+$client-theme: mat-dark-theme($client-primary, $client-accent, $client-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -28,5 +27,12 @@ $client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: map-get(map-get($client-theme, background), background)
+}

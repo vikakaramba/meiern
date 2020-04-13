@@ -1,8 +1,12 @@
-<form class="choose-name__form" (submit)="setUsername()">
-  <mat-form-field>
-    <mat-label>Username:</mat-label>
-    <input matInput [formControl]="usernameFormControl">
-  </mat-form-field>
-  <button mat-button type="submit">Start Game</button>
-  <button mat-button>Reset</button>
-</form>
+
+<mat-card class="choose-name">
+  <mat-card-title>Name wählen</mat-card-title>
+  <form class="choose-name__form" (submit)="setUsername()">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="usernameFormControl">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Start Game</button>
+    <button mat-raised-button color="warn">Reset</button>
+  </form>
+</mat-card>

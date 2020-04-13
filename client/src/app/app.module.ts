@@ -11,9 +11,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MeiernComponent } from './components/meiern/meiern.component';
+import { PlayerListComponent } from './components/player-list/player-list.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [AppComponent, ChooseNameComponent],
+  declarations: [
+    AppComponent,
+    ChooseNameComponent,
+    MeiernComponent,
+    PlayerListComponent,
+  ],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([PlayerState], {
@@ -23,8 +31,10 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
+    MatCardModule,
     FormsModule,
     ReactiveFormsModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
