@@ -7,6 +7,11 @@ import {
   GetPlayerListAction,
 } from "common/lib/Player";
 import { Server } from "socket.io";
+import {
+  Dice,
+  GetRandomDiceAction,
+  SetRandomDiceAction,
+} from "common/lib/Game";
 
 class ServerPlayer extends Player {
   public socketId: string | null = null;
@@ -39,6 +44,13 @@ export class MaiernServer {
           new SetPlayerListAction(
             this.allPlayer.map((player) => player.toPlayer())
           )
+        );
+      });
+
+      socket.on(GetRandomDiceAction.type, () => {
+        socket.emit(
+          SetRandomDiceAction.type,
+          new SetRandomDiceAction(Dice.createRandomDice())
         );
       });
     });

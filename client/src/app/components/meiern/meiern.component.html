@@ -1,1 +1,8 @@
-<p>meiern works!</p>
+<mat-card class="meiern-card">
+  <div class="meiern-card__content-container">
+    <div #diceContainer class="meiern-card__dice-container"></div>
+    <app-player-list></app-player-list>
+  </div>
+  <button mat-raised-button color="primary" (click)="getDice()">Würfeln</button>
+  <button mat-raised-button color="primary">{{dice?.getDiceValue()}}</button>
+</mat-card>

@@ -16,6 +16,8 @@ import { PlayerListComponent } from './components/player-list/player-list.compon
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router, RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     NgxsModule.forRoot([PlayerState], {
       developmentMode: !environment.production,
     }),

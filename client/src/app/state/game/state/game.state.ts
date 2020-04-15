@@ -2,7 +2,9 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { GameAction } from './game.actions';
 
 export class GameStateModel {
-  public items: string[];
+  public activePlayerId: number;
+  public try: 1 | 2 = 1;
+  public calledDice: Dice
 }
 
 @State<GameStateModel>({

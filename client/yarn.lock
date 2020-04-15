@@ -8376,6 +8376,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+roll-a-die@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/roll-a-die/-/roll-a-die-1.5.5.tgz#36dfc2a8c745daedad2a2dfc603ea7536b96c36d"
+  integrity sha512-6iSH7Lu+xxExFV9mQwbmd0AmMlYYUp1A/nVrhfafvNpNaeH5/gEaRobQdHGjlamn/O4glSmaFX390hnukb3eOQ==
+
 rollup@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.1.0.tgz#552e248e397a06b9c6db878c0564ca4ee06729c9"
