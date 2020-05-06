@@ -1,17 +1,38 @@
 export class Dice {
+  /**
+   * This is always the higher number. This is ensured in the constructor
+   */
   public firstDice: number = 0;
   public secondDice: number = 0;
 
   constructor(firstDice: number, secondDice: number) {
-    this.firstDice = firstDice;
-    this.secondDice = secondDice;
+    if (firstDice >= secondDice) {
+      this.firstDice = firstDice;
+      this.secondDice = secondDice;
+    } else {
+      this.secondDice = firstDice;
+      this.firstDice = secondDice;
+    }
+    if (this.firstDice > 6) {
+      this.firstDice = 6;
+    }
+    if (this.secondDice > 6) {
+      this.secondDice = 6;
+    }
   }
 
   public getDiceValue(): string {
-    const numbers: number[] = [this.firstDice, this.secondDice].sort(
-      (a, b) => b - a
-    );
-    return numbers.join("");
+    return `${this.firstDice}${this.secondDice}`;
+  }
+
+  public getNextHigherValue(): Dice {
+    if (this.firstDice === this.secondDice && this.firstDice !== 6) {
+      return new Dice(this.firstDice + 1, this.secondDice + 1);
+    } else if (this.firstDice - this.secondDice === 1) {
+      return new Dice(this.firstDice + 1, 1);
+    } else {
+      return new Dice(this.firstDice, this.secondDice + 1);
+    }
   }
 
   public static copy(dice: Dice): Dice {

@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { SetPlayerNameAction } from 'common/lib/Player';
 import { Router } from '@angular/router';
-import {SocketService} from "../../service/socket.service";
+import { SocketService } from '../../service/socket.service';
 
 @Component({
   selector: 'app-choose-name',
@@ -13,7 +13,11 @@ import {SocketService} from "../../service/socket.service";
 export class ChooseNameComponent {
   public usernameFormControl = new FormControl('');
 
-  constructor(private readonly store: Store, private readonly router: Router, private readonly socketService: SocketService) {}
+  constructor(
+    private readonly store: Store,
+    private readonly router: Router,
+    private readonly socketService: SocketService
+  ) {}
 
   public setUsername(): void {
     this.store.dispatch(
@@ -23,7 +27,7 @@ export class ChooseNameComponent {
   }
 
   reset() {
-    console.log('reset')
+    console.log('reset');
     this.socketService.getSocket().emit('reset');
   }
 }

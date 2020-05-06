@@ -3,23 +3,22 @@
   width: 800px;
   display: flex;
   flex-direction: column;
-
 }
 
-:host{
+:host {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
 }
-.meiern-card__content-container{
+.meiern-card__content-container {
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-grow: 1;
   padding: 5px 0;
-  width:100%;
+  width: 100%;
 }
 
 .meiern-card__dice-container {
@@ -34,6 +33,6 @@
   background: transparent;
   border: none;
   color: orangered;
-text-align: left;
+  text-align: left;
   width: min-content;
 }

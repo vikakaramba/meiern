@@ -2,14 +2,39 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dice = /** @class */ (function () {
     function Dice(firstDice, secondDice) {
+        /**
+         * This is always the higher number. This is ensured in the constructor
+         */
         this.firstDice = 0;
         this.secondDice = 0;
-        this.firstDice = firstDice;
-        this.secondDice = secondDice;
+        if (firstDice >= secondDice) {
+            this.firstDice = firstDice;
+            this.secondDice = secondDice;
+        }
+        else {
+            this.secondDice = firstDice;
+            this.firstDice = secondDice;
+        }
+        if (this.firstDice > 6) {
+            this.firstDice = 6;
+        }
+        if (this.secondDice > 6) {
+            this.secondDice = 6;
+        }
     }
     Dice.prototype.getDiceValue = function () {
-        var numbers = [this.firstDice, this.secondDice].sort(function (a, b) { return b - a; });
-        return numbers.join("");
+        return "" + this.firstDice + this.secondDice;
+    };
+    Dice.prototype.getNextHigherValue = function () {
+        if (this.firstDice === this.secondDice && this.firstDice !== 6) {
+            return new Dice(this.firstDice + 1, this.secondDice + 1);
+        }
+        else if (this.firstDice - this.secondDice === 1) {
+            return new Dice(this.firstDice + 1, 1);
+        }
+        else {
+            return new Dice(this.firstDice, this.secondDice + 1);
+        }
     };
     Dice.copy = function (dice) {
         return new Dice(dice.firstDice, dice.secondDice);
@@ -31,7 +56,6 @@ var GetRandomDiceAction = /** @class */ (function () {
 exports.GetRandomDiceAction = GetRandomDiceAction;
 var SetRandomDiceAction = /** @class */ (function () {
     function SetRandomDiceAction(dice) {
-
         this.dice = dice;
     }
     SetRandomDiceAction.type = "[Meiern] Set Random dice";

@@ -1,8 +1,12 @@
 export declare class Dice {
+    /**
+     * This is always the higher number. This is ensured in the constructor
+     */
     firstDice: number;
     secondDice: number;
     constructor(firstDice: number, secondDice: number);
     getDiceValue(): string;
+    getNextHigherValue(): Dice;
     static copy(dice: Dice): Dice;
     static createRandomDice(): Dice;
 }

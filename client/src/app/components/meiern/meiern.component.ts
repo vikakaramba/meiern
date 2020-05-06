@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {SocketService} from '../../service/socket.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { SocketService } from '../../service/socket.service';
 import {
   Dice,
   GetRandomDiceAction,
@@ -9,9 +9,9 @@ import {
 
 // @ts-ignore
 import rollADie from 'roll-a-die';
-import {Player, SetActivePlayerAction} from "common/lib/Player";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {Router} from "@angular/router";
+import { Player, SetActivePlayerAction } from 'common/lib/Player';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meiern',
@@ -23,30 +23,26 @@ export class MeiernComponent implements OnInit {
   public container: ElementRef | undefined;
 
   public dice: Dice | undefined;
-  private mePlayer: Player | undefined ;
+  private mePlayer: Player | undefined;
   myTurn = false;
   lie = '';
   diceRollCount = 0;
 
-  constructor(private readonly socketService: SocketService, private sb: MatSnackBar, private readonly router: Router) {
-
-
-    socketService
-      .getSocket()
-      .on('setMePlayer', (player: Player) => {
-        this.mePlayer = player;
-      });
+  constructor(
+    private readonly socketService: SocketService,
+    private sb: MatSnackBar,
+    private readonly router: Router
+  ) {
+    socketService.getSocket().on('setMePlayer', (player: Player) => {
+      this.mePlayer = player;
+    });
 
     socketService
       .getSocket()
       .on(RevealDiceAction.type, (revealDiceAction: RevealDiceAction) => {
         this.diceRollCount = 0;
         this.rollDice(Dice.copy(revealDiceAction.dice));
-        this.sb.open('Es wurde aufgedeckt', 'Ok', {duration: 10000});
-
-
-
-
+        this.sb.open('Es wurde aufgedeckt', 'Ok', { duration: 10000 });
       });
     socketService
       .getSocket()
@@ -59,29 +55,24 @@ export class MeiernComponent implements OnInit {
 
     socketService
       .getSocket()
-      .on(
-        'playersXTurn',
-        (aktivePlayer: Player, lieValue: string) => {
+      .on('playersXTurn', (aktivePlayer: Player, lieValue: string) => {
+        this.lie = lieValue;
 
-          this.lie = lieValue;
-
-          if (aktivePlayer.id === this.mePlayer?.id) {
-            this.diceRollCount = 0;
-            this.myTurn = true;
-          }
+        if (aktivePlayer.id === this.mePlayer?.id) {
+          this.diceRollCount = 0;
+          this.myTurn = true;
         }
-      );
-
-
+      });
   }
 
   ngOnInit(): void {
-    this.socketService.getSocket().emit('getMePlayer', this.socketService.getSocket().id);
+    this.socketService
+      .getSocket()
+      .emit('getMePlayer', this.socketService.getSocket().id);
     this.socketService.getSocket().emit('startGame');
   }
 
   private rollDice(dice: Dice) {
-
     this.dice = dice;
     rollADie({
       element: this.container?.nativeElement,
@@ -93,7 +84,6 @@ export class MeiernComponent implements OnInit {
   }
 
   public getDice(): void {
-
     this.socketService.getSocket().emit(GetRandomDiceAction.type);
     this.diceRollCount++;
   }
@@ -102,7 +92,6 @@ export class MeiernComponent implements OnInit {
     this.myTurn = false;
 
     this.socketService.getSocket().emit('nextPlayer', value);
-
   }
 
   revealDice() {
@@ -110,6 +99,6 @@ export class MeiernComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate([''])
+    this.router.navigate(['']);
   }
 }
