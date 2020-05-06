@@ -29,9 +29,10 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/server
         yarn install --prod
-        docker build . -t robertschreib/maiern-server:latest
+        echo "TAG: ${GITHUB_REF##*/}"
+        docker build . -t robertschreib/maiern-server:${GITHUB_REF##*/}
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push robertschreib/maiern-server:${GITHUB_REF}
+        docker push robertschreib/maiern-server:${GITHUB_REF##*/}
     - name: Compile Angular
       run: |
         cd $GITHUB_WORKSPACE/client
@@ -40,7 +41,8 @@ jobs:
     - name: Push client docker-image
       run: |
         cd $GITHUB_WORKSPACE/client
-        docker build . -t robertschreib/maiern-client:latest
+        echo "TAG: ${GITHUB_REF##*/}"
+        docker build . -t robertschreib/maiern-client:${GITHUB_REF##*/}
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push robertschreib/maiern-client:${GITHUB_REF}
+        docker push robertschreib/maiern-client:${GITHUB_REF##*/}
         
