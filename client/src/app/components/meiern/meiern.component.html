@@ -1,5 +1,5 @@
 <mat-card class="meiern-card">
-  <button class="backButton" [matTooltip]="'WIP (Dont use it PLS)'" (click)="back()"> <mat-icon>keyboard_backspace</mat-icon></button>
+  <a routerLink="/" class="backButton" [matTooltip]="'WIP (Dont use it PLS)'"><mat-icon>keyboard_backspace</mat-icon></a>
   <div class="meiern-card__content-container">
 
     <div [hidden]="diceRollCount >= 2" #diceContainer class="meiern-card__dice-container"></div>

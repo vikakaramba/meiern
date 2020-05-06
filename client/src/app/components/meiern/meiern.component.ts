@@ -56,14 +56,6 @@ export class MeiernComponent implements OnInit {
           this.rollDice(Dice.copy(setRandomDiceAction.dice));
         }
       );
-    socketService
-      .getSocket()
-      .on(
-        'getPlayerList',
-        (allPlayer: any) => {
-
-        }
-      );
 
     socketService
       .getSocket()
@@ -85,7 +77,6 @@ export class MeiernComponent implements OnInit {
 
   ngOnInit(): void {
     this.socketService.getSocket().emit('getMePlayer', this.socketService.getSocket().id);
-    this.socketService.getSocket().emit('getPlayerList');
     this.socketService.getSocket().emit('startGame');
   }
 

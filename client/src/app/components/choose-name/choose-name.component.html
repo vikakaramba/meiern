@@ -1,6 +1,6 @@
 <mat-card class="choose-name">
   <div class="choose-name__card">
-    <form class="choose-name__form" >
+    <form class="choose-name__form" (keyup.enter)="setUsername()">
       <h3>Name wählen</h3>
       <mat-form-field>
         <mat-label>Name</mat-label>

@@ -57,11 +57,7 @@ export class MaiernServer {
                     new SetRandomDiceAction(this.globalDice)
                 );
                 if (this.globalDice.getDiceValue() === '21') {
-                    socket.emit(
-                        RevealDiceAction.type,
-                        new RevealDiceAction(this.globalDice)
-                    );
-                    socket.broadcast.emit(
+                    socket.nsp.emit(
                         RevealDiceAction.type,
                         new RevealDiceAction(this.globalDice)
                     );
@@ -69,75 +65,58 @@ export class MaiernServer {
             });
             socket.on(RevealDiceAction.type, () => {
                 if (this.globalDice !== undefined) {
-                // Should work with 1 emit if we use io.emit but it wont work right now so this work around
-                    socket.emit(
-                        RevealDiceAction.type,
-                        new RevealDiceAction(this.globalDice)
-                    );
-                    socket.broadcast.emit(
-                        RevealDiceAction.type,
-                        new RevealDiceAction(this.globalDice)
-                    );
+
+                    socket.nsp.emit(RevealDiceAction.type,
+                        new RevealDiceAction(this.globalDice));
                 }
 
             });
 
-            socket.on('getPlayerList', () => {
 
-                socket.emit(
-                    'getPlayerList',
-                    this.allPlayer
-                );
-
-            });
             socket.on('reset', () => {
-             this.lieValue = '';
-            this.id = 0;
-            this.allPlayer = [];
-            this.globalDice = undefined;
-            this.activePlayer = undefined;
+                this.lieValue = '';
+                this.id = 0;
+                this.allPlayer = [];
+                this.globalDice = undefined;
+                this.activePlayer = undefined;
                 this.broadcastPlayerList(socket);
             });
             socket.on('startGame', () => {
-                 socket.emit('playersXTurn',
-                     this.allPlayer[0], '');
-                  this.activePlayer = this.allPlayer[0];
+                socket.emit('playersXTurn',
+                    this.allPlayer[0], '');
+                this.activePlayer = this.allPlayer[0];
             });
             socket.on('getMePlayer', (id: string) => {
-               for (let player of this.allPlayer) {
-                   if (player.socketId == id) {
-                       socket.emit('setMePlayer', player);
-                   }
-               }
+                for (let player of this.allPlayer) {
+                    if (player.socketId == id) {
+                        socket.emit('setMePlayer', player);
+                        break;
+                    }
+                }
             });
             socket.on('nextPlayer', (lieValue: string) => {
 
-            this.lieValue = lieValue;
+                this.lieValue = lieValue;
 
-            let length = this.allPlayer.length ;
+                let length = this.allPlayer.length;
 
-            let lastPlayer = this.activePlayer;
-                for (let i = 0; i < length; i++)
-                 {
-                if (lastPlayer?.id === this.allPlayer[i].id) {
-                    if (i == length -1) {
-                        this.activePlayer = this.allPlayer[0];
+                let lastPlayer = this.activePlayer;
+                for (let i = 0; i < length; i++) {
+                    if (lastPlayer?.id === this.allPlayer[i].id) {
+                        if (i === length - 1) {
+                            this.activePlayer = this.allPlayer[0];
 
-                        break;
-                    } else {
-                        this.activePlayer = this.allPlayer[i+1];
+                            break;
+                        } else {
+                            this.activePlayer = this.allPlayer[i + 1];
 
-                        break;
+                            break;
+                        }
+
                     }
 
                 }
-
-            }
-
-                const io = require('socket.io')();
-                socket.broadcast.emit('playersXTurn',
-                    this.activePlayer, this.lieValue);
-                socket.emit('playersXTurn',
+                socket.nsp.emit('playersXTurn',
                     this.activePlayer, this.lieValue);
             });
         });
