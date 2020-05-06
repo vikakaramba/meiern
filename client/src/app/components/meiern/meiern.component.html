@@ -1,8 +1,18 @@
 <mat-card class="meiern-card">
+  <a routerLink="/" class="backButton" [matTooltip]="'WIP (Dont use it PLS)'"><mat-icon>keyboard_backspace</mat-icon></a>
   <div class="meiern-card__content-container">
-    <div #diceContainer class="meiern-card__dice-container"></div>
+
+    <div [hidden]="diceRollCount >= 2" #diceContainer class="meiern-card__dice-container"></div>
+    <div [hidden]="!(diceRollCount >= 2)"  class="meiern-card__dice-container"></div>
     <app-player-list></app-player-list>
   </div>
-  <button mat-raised-button color="primary" (click)="getDice()">Würfeln</button>
-  <button mat-raised-button color="primary">{{dice?.getDiceValue()}}</button>
+  {{lie}}
+  <button [disabled]="!myTurn || diceRollCount >= 2" mat-raised-button color="primary" (click)="getDice()">Würfeln</button>
+  <label  class="inputLabel">
+    <input [hidden]="!(diceRollCount >= 2)" [disabled]="!myTurn" #lieValue1 matInput type="text" color="primary" value="00">
+    <input [hidden]="diceRollCount >= 2" [disabled]="!myTurn" #lieValue2 matInput type="text" color="primary"  value="{{dice?.getDiceValue()}}">
+  </label>
+  <button [disabled]="!myTurn || diceRollCount >= 1" mat-raised-button color="primary" (click)="revealDice()">Aufdecken</button>
+  <button *ngIf="!(diceRollCount >= 2)" [disabled]="!myTurn || diceRollCount === 0" mat-raised-button color="primary" (click)="nextPlayer(lieValue2.value)">Weiter Geben</button>
+  <button *ngIf="diceRollCount >= 2" [disabled]="!myTurn || diceRollCount === 0 " mat-raised-button color="primary" (click)="nextPlayer(lieValue1.value)">Weiter Geben</button>
 </mat-card>
