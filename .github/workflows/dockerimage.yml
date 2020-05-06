@@ -1,0 +1,48 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v1.4.2
+      with:
+        node-version: 12.x
+
+    - name: Compile common-lib
+      run: |
+        cd $GITHUB_WORKSPACE/common-lib
+        yarn install
+        yarn build
+    - name: Compile Server
+      run: |
+        cd $GITHUB_WORKSPACE/server
+        yarn install
+        yarn build-ts
+    - name: Push server docker-image
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: robertschreib/maiern-server
+        tags: latest
+        dockerfile: $GITHUB_WORKSPACE/server/Dockerfile
+    - name: Compile Angular
+      run: |
+        cd $GITHUB_WORKSPACE/client
+        yarn install
+        yarn build
+    - name: Push client docker-image
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: robertschreib/maiern-client
+        tags: latest
+        dockerfile: $GITHUB_WORKSPACE/client/Dockerfile
