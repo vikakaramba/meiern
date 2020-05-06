@@ -31,6 +31,7 @@ var GetRandomDiceAction = /** @class */ (function () {
 exports.GetRandomDiceAction = GetRandomDiceAction;
 var SetRandomDiceAction = /** @class */ (function () {
     function SetRandomDiceAction(dice) {
+
         this.dice = dice;
     }
     SetRandomDiceAction.type = "[Meiern] Set Random dice";

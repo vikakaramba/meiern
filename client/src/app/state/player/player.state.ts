@@ -35,7 +35,6 @@ export class PlayerState implements NgxsOnInit {
     this.socket.on(
       SetPlayerListAction.type,
       (playerListAction: SetPlayerListAction) => {
-        console.log(playerListAction);
         this.store.dispatch(new SetPlayerListAction(playerListAction.players));
       }
     );
