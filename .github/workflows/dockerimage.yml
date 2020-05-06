@@ -26,23 +26,20 @@ jobs:
         yarn install
         yarn build-ts
     - name: Push server docker-image
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: robertschreib/maiern-server
-        tags: latest
-        dockerfile: $GITHUB_WORKSPACE/server/Dockerfile
+      run: |
+        cd $GITHUB_WORKSPACE/server
+        docker build . -t robertschreib/maiern-server:latest
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push robertschreib/maiern-server:latest
     - name: Compile Angular
       run: |
         cd $GITHUB_WORKSPACE/client
         yarn install
         yarn build
     - name: Push client docker-image
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: robertschreib/maiern-client
-        tags: latest
-        dockerfile: $GITHUB_WORKSPACE/client/Dockerfile
+      run: |
+        cd $GITHUB_WORKSPACE/client
+        docker build . -t robertschreib/maiern-client:latest
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push robertschreib/maiern-client:latest
+        
