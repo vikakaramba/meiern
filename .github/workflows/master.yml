@@ -28,6 +28,7 @@ jobs:
     - name: Push server docker-image
       run: |
         cd $GITHUB_WORKSPACE/server
+        yarn install --prod
         docker build . -t robertschreib/maiern-server:latest
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push robertschreib/maiern-server:latest
