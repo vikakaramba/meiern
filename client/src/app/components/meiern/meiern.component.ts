@@ -42,7 +42,7 @@ export class MeiernComponent implements OnInit {
       .on(RevealDiceAction.type, (revealDiceAction: RevealDiceAction) => {
         this.diceRollCount = 0;
         this.rollDice(Dice.copy(revealDiceAction.dice));
-        this.sb.open('Es wurde aufgedeckt', 'Ok');
+        this.sb.open('Es wurde aufgedeckt', 'Ok', {duration: 10000});
 
 
 
