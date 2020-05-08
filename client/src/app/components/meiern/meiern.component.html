@@ -1,22 +1,22 @@
 <mat-card class="meiern-card">
-  <a routerLink="/" class="backButton" [matTooltip]="'WIP (Dont use it PLS)'"
-    ><mat-icon>keyboard_backspace</mat-icon></a
-  >
+  <a routerLink="/" class="backButton">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </a>
   <div class="meiern-card__content-container">
     <div
-      [hidden]="diceRollCount >= 2"
+      [hidden]="isHiddenDiceThrow()"
       #diceContainer
       class="meiern-card__dice-container"
     ></div>
     <div
-      [hidden]="!(diceRollCount >= 2)"
+      [hidden]="!isHiddenDiceThrow()"
       class="meiern-card__dice-container"
     ></div>
     <app-player-list></app-player-list>
   </div>
-  {{ lie }}
+  Letzter spieler sagt: {{ lie }}
   <button
-    [disabled]="!myTurn || diceRollCount >= 2"
+    [disabled]="!myTurn || isHiddenDiceThrow()"
     mat-raised-button
     color="primary"
     (click)="getDice()"
@@ -24,23 +24,22 @@
     Würfeln
   </button>
   <label class="inputLabel">
+    Weitergeben:
     <input
-      [hidden]="!(diceRollCount >= 2)"
+      [hidden]="!isHiddenDiceThrow()"
       [disabled]="!myTurn"
       #lieValue1
       matInput
       type="text"
-      color="primary"
-      value="00"
+      [value]="getNextCallValue()"
     />
     <input
-      [hidden]="diceRollCount >= 2"
+      [hidden]="isHiddenDiceThrow()"
       [disabled]="!myTurn"
       #lieValue2
       matInput
       type="text"
-      color="primary"
-      value="{{ dice?.getDiceValue() }}"
+      [value]="getNextCallValue()"
     />
   </label>
   <button
@@ -52,7 +51,7 @@
     Aufdecken
   </button>
   <button
-    *ngIf="!(diceRollCount >= 2)"
+    *ngIf="!isHiddenDiceThrow()"
     [disabled]="!myTurn || diceRollCount === 0"
     mat-raised-button
     color="primary"
@@ -61,7 +60,7 @@
     Weiter Geben
   </button>
   <button
-    *ngIf="diceRollCount >= 2"
+    *ngIf="isHiddenDiceThrow()"
     [disabled]="!myTurn || diceRollCount === 0"
     mat-raised-button
     color="primary"

@@ -6,10 +6,9 @@ import {
   RevealDiceAction,
   SetRandomDiceAction,
 } from 'common/lib/Game';
-
 // @ts-ignore
 import rollADie from 'roll-a-die';
-import { Player, SetActivePlayerAction } from 'common/lib/Player';
+import { Player } from 'common/lib/Player';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -20,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class MeiernComponent implements OnInit {
   @ViewChild('diceContainer')
-  public container: ElementRef | undefined;
+  public diceContainer: ElementRef | undefined;
 
   public dice: Dice | undefined;
   private mePlayer: Player | undefined;
@@ -30,7 +29,7 @@ export class MeiernComponent implements OnInit {
 
   constructor(
     private readonly socketService: SocketService,
-    private sb: MatSnackBar,
+    private snackBar: MatSnackBar,
     private readonly router: Router
   ) {
     socketService.getSocket().on('setMePlayer', (player: Player) => {
@@ -42,7 +41,7 @@ export class MeiernComponent implements OnInit {
       .on(RevealDiceAction.type, (revealDiceAction: RevealDiceAction) => {
         this.diceRollCount = 0;
         this.rollDice(Dice.copy(revealDiceAction.dice));
-        this.sb.open('Es wurde aufgedeckt', 'Ok', { duration: 10000 });
+        this.snackBar.open('Es wurde aufgedeckt', 'Ok', { duration: 10000 });
       });
     socketService
       .getSocket()
@@ -56,9 +55,14 @@ export class MeiernComponent implements OnInit {
     socketService
       .getSocket()
       .on('playersXTurn', (aktivePlayer: Player, lieValue: string) => {
+        this.lie = '';
         this.lie = lieValue;
+        this.dice = undefined;
 
         if (aktivePlayer.id === this.mePlayer?.id) {
+          if (this.diceContainer) {
+            this.diceContainer.nativeElement.innerHTML = '';
+          }
           this.diceRollCount = 0;
           this.myTurn = true;
         }
@@ -75,7 +79,7 @@ export class MeiernComponent implements OnInit {
   private rollDice(dice: Dice) {
     this.dice = dice;
     rollADie({
-      element: this.container?.nativeElement,
+      element: this.diceContainer?.nativeElement,
       numberOfDice: 2,
       values: [dice.firstDice, dice.secondDice],
       delay: 100000000,
@@ -90,6 +94,10 @@ export class MeiernComponent implements OnInit {
 
   nextPlayer(value: string) {
     this.myTurn = false;
+    this.diceRollCount = 0;
+    if (this.diceContainer) {
+      this.diceContainer.nativeElement.innerHTML = '';
+    }
 
     this.socketService.getSocket().emit('nextPlayer', value);
   }
@@ -100,5 +108,22 @@ export class MeiernComponent implements OnInit {
 
   back() {
     this.router.navigate(['']);
+  }
+
+  public isHiddenDiceThrow(): boolean {
+    return this.diceRollCount >= 2;
+  }
+
+  public getNextCallValue(): string {
+    if (
+      !this.isHiddenDiceThrow() &&
+      Number(this.dice?.getDiceValue()) > Number(this.lie)
+    ) {
+      return this.dice?.getDiceValue() ?? this.lie;
+    } else {
+      return new Dice(Number(this.lie.charAt(0)), Number(this.lie.charAt(1)))
+        .getNextHigherValue()
+        .getDiceValue();
+    }
   }
 }
